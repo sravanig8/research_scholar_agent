@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compare Papers - Research Scholar Agent</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .comparison-cell {
+            border-left: 4px solid #0d6efd;
+            padding-left: 1rem;
+        }
+
+        .comparison-cell.right {
+            border-left: none;
+            border-right: 4px solid #0d6efd;
+            padding-left: 0;
+            padding-right: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-cell.right {
+                border-right: none;
+                border-left: 4px solid #0d6efd;
+                padding-right: 0;
+                padding-left: 1rem;
+            }
+        }
+
+        .comparison-label {
+            font-weight: 600;
+            color: #666;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .comparison-value {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .paper-number {
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            background-color: #0d6efd;
+            color: white;
+            text-align: center;
+            line-height: 28px;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="/">
+                <span class="text-primary">📚</span> Research Scholar Agent
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Search</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/history">History</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/compare">Compare</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-5">
+        <div class="container">
+            <!-- Header -->
+            <div class="mb-5">
+                <h2>⚖️ Paper Comparison</h2>
+                <p class="text-muted">Detailed analysis of both papers</p>
+            </div>
+
+            <!-- Comparison Grid -->
+            <div class="comparison-grid mb-5">
+                <!-- Paper 1 -->
+                <div>
+                    <div class="comparison-cell">
+                        <!-- Paper Number Badge -->
+                        <div class="mb-3">
+                            <span class="paper-number">1</span>
+                        </div>
+
+                        <!-- Title -->
+                        <div>
+                            <div class="comparison-label">Paper Title</div>
+                            <div class="comparison-value">
+                                <strong>{{ comparison.title1 }}</strong>
+                            </div>
+                        </div>
+
+                        <!-- Authors -->
+                        <div>
+                            <div class="comparison-label">Authors</div>
+                            <div class="comparison-value">
+                                {{ comparison.authors1[:200] }}{% if comparison.authors1|length > 200 %}...{% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Year -->
+                        <div>
+                            <div class="comparison-label">Publication Year</div>
+                            <div class="comparison-value">
+                                <span class="badge bg-info">{{ comparison.year1 }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Methods -->
+                        <div>
+                            <div class="comparison-label">Methodology</div>
+                            <div class="comparison-value">
+                                {{ comparison.method_analysis1 }}
+                            </div>
+                        </div>
+
+                        <!-- Key Findings -->
+                        <div>
+                            <div class="comparison-label">Key Conclusion</div>
+                            <div class="comparison-value">
+                                {{ comparison.conclusion_key_terms1 }}
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div>
+                            <div class="comparison-label">AI Summary</div>
+                            <div class="comparison-value">
+                                {{ comparison.summary1 }}
+                            </div>
+                        </div>
+
+                        <!-- Full Abstract -->
+                        <div>
+                            <button class="btn btn-link btn-sm p-0" type="button" data-bs-toggle="collapse" data-bs-target="#abstract1">
+                                📄 View Full Abstract
+                            </button>
+                            <div class="collapse mt-2" id="abstract1">
+                                <p class="text-muted small bg-light p-3 rounded">
+                                    {{ comparison.abstract1 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Paper 2 -->
+                <div>
+                    <div class="comparison-cell right">
+                        <!-- Paper Number Badge -->
+                        <div class="mb-3">
+                            <span class="paper-number">2</span>
+                        </div>
+
+                        <!-- Title -->
+                        <div>
+                            <div class="comparison-label">Paper Title</div>
+                            <div class="comparison-value">
+                                <strong>{{ comparison.title2 }}</strong>
+                            </div>
+                        </div>
+
+                        <!-- Authors -->
+                        <div>
+                            <div class="comparison-label">Authors</div>
+                            <div class="comparison-value">
+                                {{ comparison.authors2[:200] }}{% if comparison.authors2|length > 200 %}...{% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Year -->
+                        <div>
+                            <div class="comparison-label">Publication Year</div>
+                            <div class="comparison-value">
+                                <span class="badge bg-info">{{ comparison.year2 }}</span>
+                            </div>
+                        </div>
+
+                        <!-- Methods -->
+                        <div>
+                            <div class="comparison-label">Methodology</div>
+                            <div class="comparison-value">
+                                {{ comparison.method_analysis2 }}
+                            </div>
+                        </div>
+
+                        <!-- Key Findings -->
+                        <div>
+                            <div class="comparison-label">Key Conclusion</div>
+                            <div class="comparison-value">
+                                {{ comparison.conclusion_key_terms2 }}
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div>
+                            <div class="comparison-label">AI Summary</div>
+                            <div class="comparison-value">
+                                {{ comparison.summary2 }}
+                            </div>
+                        </div>
+
+                        <!-- Full Abstract -->
+                        <div>
+                            <button class="btn btn-link btn-sm p-0" type="button" data-bs-toggle="collapse" data-bs-target="#abstract2">
+                                📄 View Full Abstract
+                            </button>
+                            <div class="collapse mt-2" id="abstract2">
+                                <p class="text-muted small bg-light p-3 rounded">
+                                    {{ comparison.abstract2 }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Summary -->
+            <div class="card border-info mb-5">
+                <div class="card-body">
+                    <h5 class="card-title">📊 Comparison Summary</h5>
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-0">
+                            <thead>
+                                <tr class="table-light">
+                                    <th>Aspect</th>
+                                    <th>Paper 1</th>
+                                    <th>Paper 2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Year</strong></td>
+                                    <td>{{ comparison.year1 }}</td>
+                                    <td>{{ comparison.year2 }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Methodology</strong></td>
+                                    <td><small>{{ comparison.method_analysis1[:80] }}...</small></td>
+                                    <td><small>{{ comparison.method_analysis2[:80] }}...</small></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Key Conclusion</strong></td>
+                                    <td><small>{{ comparison.conclusion_key_terms1[:80] }}...</small></td>
+                                    <td><small>{{ comparison.conclusion_key_terms2[:80] }}...</small></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <div class="text-center">
+                <a href="/" class="btn btn-primary me-2">← New Search</a>
+                <a href="/history" class="btn btn-secondary">View History</a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-light border-top py-4 mt-5">
+        <div class="container text-center text-muted">
+            <p class="mb-0">Research Scholar Agent v1.0</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

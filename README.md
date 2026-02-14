@@ -3,6 +3,8 @@
 
 A sophisticated web application that helps researchers search for papers, generate AI-powered summaries, and compare research papers side-by-side.
 
+![Research Scholar Agent Screenshot](screenshots/screenshot.png)
+
 ---
 
 ## Features ✨

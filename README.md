@@ -5,6 +5,8 @@ A sophisticated web application that helps researchers search for papers, genera
 
 ![Research Scholar Agent Screenshot](screenshots/screenshot.png)
 
+![Research Scholar Agent Results](screenshots/screenshot2.png)
+
 ---
 
 ## Features ✨
